@@ -20,7 +20,7 @@ from datahub.metadata.schema_classes import (
 from datahub.emitter.mce_builder import make_dataset_urn
 from datahub.emitter.rest_emitter import DatahubRestEmitter
 
-# ---------------- CONFIG ----------------
+# CONFIG 
 DATAHUB_GMS_SERVER = "http://localhost:8080"
 PLATFORM = "avro"
 ENV = "DEV"
@@ -76,10 +76,10 @@ def generate_html_diff_report(dataset_name, old_fields, new_fields):
     print(f"📄 HTML diff report saved: {report_path}")
     webbrowser.open(report_path)
 
-# ---------------- EMITTER ----------------
+# EMITTER 
 emitter = DatahubRestEmitter(gms_server=DATAHUB_GMS_SERVER)
 
-# ---------------- PROCESS FILES ----------------
+# PROCESS FILES
 for file_info in AVRO_FILES_INFO:
     avro_path = file_info["file_path"]
     dataset_name = file_info["dataset_name"]
@@ -119,7 +119,7 @@ for file_info in AVRO_FILES_INFO:
 
             schema_fields[name] = native_type
 
-    # ---------------- CHECK FOR SCHEMA CHANGE ----------------
+    # CHECK FOR SCHEMA CHANGE 
     cache_file = f"{SCHEMA_CACHE_DIR}/{dataset_name}.json"
     schema_changed = False
     if os.path.exists(cache_file):
@@ -138,7 +138,7 @@ for file_info in AVRO_FILES_INFO:
     with open(cache_file, "w") as f:
         json.dump(schema_fields, f, indent=2)
 
-    # ---------------- CREATE SCHEMA METADATA ----------------
+    # CREATE SCHEMA METADATA 
     schema_field_objs = []
     for field, dtype in schema_fields.items():
         if dtype == "string":
